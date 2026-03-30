@@ -15,12 +15,12 @@ export default function AffiliateLogin() {
     <div className="min-h-screen bg-white flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Top Header */}
       <div className="w-full max-w-md text-center mb-8">
-        <h1 className="text-xl font-bold text-primary mb-4">ShopSlayer</h1>
-        <hr className="w-full border-gray-200"/>
+        <h1 className="text-xl text-gray-500 font-bold text-primary mb-4">ShopSlayer</h1>
+        <hr className="w-full border-gray-300"/>
       </div>
 
       <div className="w-full max-w-md flex flex-col pt-8">
-        <h2 className="text-3xl font-bold text-primary mb-2">Welcome back</h2>
+        <h2 className="text-3xl text-gray-500 font-bold text-primary mb-2">Welcome back</h2>
         <p className="text-gray-500 mb-8 leading-relaxed">
           Log in to browse campaigns and track your progress.
         </p>

@@ -14,7 +14,7 @@ export default function BrandLogin() {
   return (
     <div className="min-h-screen bg-white flex flex-col md:flex-row">
       {/* Left Side - Dark Navy */}
-      <div className="md:w-[45%] bg-primary flex flex-col justify-between p-8 lg:p-16 text-white min-h-[40vh] md:min-h-screen">
+      <div className="md:w-[45%] bg-[#2D1B69] flex flex-col justify-between p-8 lg:p-16 text-white min-h-[40vh] md:min-h-screen">
         <div>
           <h1 className="text-2xl font-bold mb-16">ShopSlayer</h1>
           
@@ -68,7 +68,7 @@ export default function BrandLogin() {
           </Link>
         </div>
 
-        <div className="max-w-md w-full mx-auto md:mx-0 xl:mx-auto">
+        <div className="max-w-md text-gray-500 w-full mx-auto md:mx-0 xl:mx-auto">
           <h2 className="text-3xl font-bold text-primary mb-2">
             Log in to your brand account
           </h2>
