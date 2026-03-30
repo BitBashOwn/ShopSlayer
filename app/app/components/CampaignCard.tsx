@@ -29,7 +29,7 @@ export default function CampaignCard({
           Create a free account to opt in
         </p>
 
-        <button className="bg-[#FF4D8D] text-white text-[12px] px-4 py-2 rounded-lg font-medium hover:bg-[#e8437f] transition">
+        <button className="bg-[#FF4D8D] text-white text-[12px] px-4 py-2 rounded-lg font-medium hover:bg-[#e8437f] transition cursor-pointer">
           Get Started →
         </button>
       </div>

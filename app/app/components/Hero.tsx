@@ -1,4 +1,5 @@
-// app/components/Hero.tsx
+import Link from "next/dist/client/link";
+
 export default function Hero() {
   return (
     <section className="flex flex-col items-center text-center px-6 py-16 sm:py-24">
@@ -21,9 +22,11 @@ export default function Hero() {
       </p>
 
       {/* Button */}
-      <button className="mt-8 bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg">
-        Get Started →
-      </button>
+      <Link href="/login-signup/affiliate/signup">
+        <button className="mt-8 bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg cursor-pointer">
+          Get Started →
+        </button>
+      </Link>
     </section>
   );
 }

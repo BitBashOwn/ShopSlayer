@@ -22,7 +22,7 @@ export default function CampaignSection() {
             ✦ Beauty & Skincare
           </p>
 
-          <button className="text-[12px] text-[#FF4D8D] hover:underline">
+          <button className="text-[12px] text-[#FF4D8D] hover:underline cursor-pointer">
             See all →
           </button>
         </div>
@@ -57,7 +57,7 @@ export default function CampaignSection() {
             ✦ Tech & Gadgets
           </p>
 
-          <button className="text-[12px] text-[#FF4D8D] hover:underline">
+          <button className="text-[12px] text-[#FF4D8D] hover:underline cursor-pointer">
             See all →
           </button>
         </div>

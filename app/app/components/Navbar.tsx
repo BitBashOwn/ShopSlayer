@@ -1,3 +1,6 @@
+import Link from "next/dist/client/link";
+import router from "next/dist/shared/lib/router/router";
+
 // app/components/Navbar.tsx
 export default function Navbar() {
   return (
@@ -5,10 +8,16 @@ export default function Navbar() {
       <h1 className="text-white font-bold text-lg">ShopSlayer</h1>
 
       <div className="flex items-center gap-3">
-        <button className="border border-white text-white px-4 py-1 rounded-full text-sm">
+        <Link href="/login-signup/brand/signup">
+        <button className="border border-white text-white px-4 py-1 rounded-full text-sm cursor-pointer">
           For Brands →
         </button>
-        <button className="text-white text-sm">Sign In</button>
+        </Link>
+        <Link href="/login-signup/affiliate/login">
+        <button className="text-white text-sm cursor-pointer">
+          Sign In
+        </button>
+        </Link>
       </div>
     </nav>
   );
