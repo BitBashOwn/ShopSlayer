@@ -1,0 +1,7 @@
+{"timestamp":"00:00:09.296","source":"Server","level":"WARN","message":"⚠ Slow filesystem detected. The benchmark took 430ms. If D:\\weproject\\ShopSlayer\\app/.next/dev is a network drive, consider moving it to a local folder.\nSee more: https://nextjs.org/docs/app/guides/local-development"}
+{"timestamp":"00:00:10.969","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:10.973","source":"Server","level":"LOG","message":"  We detected TypeScript in your project and created a tsconfig.json file for you."}
+{"timestamp":"00:00:12.167","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:15.381","source":"Server","level":"LOG","message":"○ Compiling /_not-found/page ..."}
+{"timestamp":"00:00:37.395","source":"Server","level":"ERROR","message":"⨯ ./app/app/layout.tsx:3:1\nModule not found: Can't resolve './globals.css'\n  1 | import type { Metadata } from \"next\";\n  2 | import { Geist, Geist_Mono } from \"next/font/google\";\n> 3 | import \"./globals.css\";\n    | ^^^^^^^^^^^^^^^^^^^^^^^\n  4 |\n  5 | const geistSans = Geist({\n  6 |   variable: \"--font-geist-sans\",\n\n\n\nhttps://nextjs.org/docs/messages/module-not-found\n\n"}
+{"timestamp":"00:00:40.885","source":"Server","level":"LOG","message":"○ Compiling /_error ..."}
