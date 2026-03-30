@@ -1,3 +1,5 @@
+import Link from "next/dist/client/link";
+
 type Props = {
   title: string;
   brand: string;
@@ -28,10 +30,11 @@ export default function CampaignCard({
         <p className="text-[12px] text-gray-500 mt-1 mb-4">
           Create a free account to opt in
         </p>
-
-        <button className="bg-[#FF4D8D] text-white text-[12px] px-4 py-2 rounded-lg font-medium hover:bg-[#e8437f] transition">
-          Get Started →
-        </button>
+        <Link href="/login-signup/affiliate/signup">
+          <button className="bg-[#FF4D8D] text-white text-[12px] px-4 py-2 rounded-lg font-medium hover:bg-[#e8437f] transition cursor-pointer">
+            Get Started →
+          </button>
+        </Link>
       </div>
     );
   }
