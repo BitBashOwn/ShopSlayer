@@ -3,6 +3,7 @@
 @theme inline {
   --color-primary: #1a1a6e;
   --color-accent: #e8445a;
+  --color-sidebar: #1e1b4b;
   --color-background: #ffffff;
   --color-foreground: #171717;
   --font-sans: var(--font-geist-sans);
