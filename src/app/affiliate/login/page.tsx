@@ -16,7 +16,7 @@ export default function AffiliateLogin() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
-      router.push("/");
+      router.push("/affiliate/Mobile_page/mobile");
     }
   };
 
@@ -70,6 +70,7 @@ export default function AffiliateLogin() {
             </div>
           </div>
 
+          
           <button
             type="submit"
             disabled={!isFormValid}

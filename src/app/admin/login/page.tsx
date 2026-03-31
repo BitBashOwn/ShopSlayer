@@ -15,7 +15,7 @@ export default function AdminLogin() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
-      router.push("/");
+      router.push("/admin/admin_dashboard");
     }
   };
 
@@ -51,7 +51,7 @@ export default function AdminLogin() {
               <Link href="/admin/forgot-password" className="text-sm font-medium text-[#e8445a] hover:opacity-80">Forgot password?</Link>
             </div>
           </div>
-
+          
           <button type="submit" disabled={!isFormValid}
             className={`w-full flex items-center justify-center py-4 rounded-full text-base font-medium text-white transition-colors ${
               isFormValid ? "bg-[#1a1a6e] hover:opacity-90 cursor-pointer" : "bg-gray-200 text-gray-400 cursor-not-allowed"

@@ -15,7 +15,7 @@ export default function BrandLogin() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
-      router.push("/");
+      router.push("/brand/dashboard");
     }
   };
 
