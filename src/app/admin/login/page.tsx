@@ -15,7 +15,7 @@ export default function AdminLogin() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
-      router.push("/admin/admin_dashboard");
+      router.push("/admin/overview");
     }
   };
 

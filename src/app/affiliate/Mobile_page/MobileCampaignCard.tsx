@@ -1,6 +1,11 @@
+import Link from "next/link";
+
 export default function MobileCampaignCard() {
   return (
-    <div className="rounded-xl bg-white p-4 shadow-sm lg:rounded-[24px] lg:border lg:border-[#eef1f6] lg:p-5 lg:shadow-none">
+    <Link
+      href="/affiliate/Mobile_page/mobile/campaign-detail"
+      className="block rounded-xl bg-white p-4 shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md lg:rounded-[24px] lg:border lg:border-[#eef1f6] lg:p-5 lg:shadow-none"
+    >
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 rounded-lg bg-pink-400 lg:h-12 lg:w-12" />
         <div>
@@ -31,6 +36,6 @@ export default function MobileCampaignCard() {
           Open Plan
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
