@@ -1,5 +1,5 @@
-import Dashboard from "./dashboard_main";
+import { redirect } from "next/navigation";
 
-export default function AdminDashboardPage() {
-  return <Dashboard />;
+export default function AdminDashboardLegacyPage() {
+  redirect("/admin/campaigns");
 }

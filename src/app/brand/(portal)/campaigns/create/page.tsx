@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowLeft, CalendarDays, Zap, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Zap } from "lucide-react";
 
 export default function CreateCampaign() {
   const router = useRouter();
@@ -16,75 +16,73 @@ export default function CreateCampaign() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-white border-b border-gray-100 px-8 py-5 flex items-center justify-between">
+    <div className="flex h-full flex-col bg-[#fbfbfd]">
+      <div className="z-20 flex shrink-0 items-center justify-between border-b border-[#e7e7ee] bg-white px-8 py-4">
         <div className="flex items-center gap-4">
           <Link
             href="/brand/dashboard"
-            className="text-gray-500 hover:text-[#1a1a6e] transition-colors"
+            className="text-[#76778f] transition-colors hover:text-[#1a1a6e]"
           >
             <ArrowLeft size={20} />
           </Link>
-          <h1 className="text-xl font-bold text-[#1a1a6e]">Create Campaign</h1>
+          <h1 className="text-2xl font-bold leading-tight text-[#1a1a4b]">Create Campaign</h1>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={handleAction}
-            className="px-5 py-2.5 rounded-md font-medium text-sm text-[#1a1a6e] border border-gray-200 hover:bg-gray-50 transition-colors"
+            className="rounded-[10px] border border-[#1a1a6e] bg-white px-6 py-2.5 text-sm font-semibold text-[#1a1a6e]"
           >
             Save Draft
           </button>
           <button
             onClick={handleAction}
-            className="px-5 py-2.5 rounded-md font-medium text-sm text-white bg-[#e8445a] hover:bg-[#d63d52] transition-colors flex items-center gap-2"
+            className="flex items-center gap-2 rounded-[10px] bg-[#ec3f82] px-6 py-2.5 text-sm font-semibold text-white"
           >
             Publish Campaign <span>→</span>
           </button>
         </div>
       </div>
 
-      <div className="flex-1 p-8 flex gap-12 max-w-7xl relative pb-24">
-        {/* Left Form Column */}
-        <div className="flex-1 max-w-2xl space-y-10">
-          {/* Campaign Basics */}
-          <section className="space-y-6">
-            <h2 className="text-lg font-bold text-[#1a1a6e]">Campaign Basics</h2>
-            
+      <div className="flex flex-1 overflow-hidden">
+        <div className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto max-w-[980px]">
+            <section className="space-y-5">
+              <SectionTitle title="Campaign Basics" />
+
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Campaign Name</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Campaign Name</label>
               <input
                 type="text"
                 placeholder="e.g., GlowLab Spring Beauty Campaign"
                 value={campaignName}
                 onChange={(e) => setCampaignName(e.target.value)}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900"
+                className="h-12 w-full rounded-[10px] border border-[#d8d8e4] px-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Product Name</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Product Name</label>
               <input
                 type="text"
                 placeholder="e.g., Vitamin C Glow Serum"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900"
+                className="h-12 w-full rounded-[10px] border border-[#d8d8e4] px-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Product Description</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Product Description</label>
               <textarea
-                placeholder="Brief description of your product..."
-                rows={4}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 resize-none"
+                placeholder="brief descriotion of your product..."
+                rows={3}
+                className="w-full resize-none rounded-[10px] border border-[#d8d8e4] px-4 py-3 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Content Category</label>
-              <select className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 bg-white">
+              <label className="block text-sm font-semibold text-[#2f3154]">Content Category</label>
+              <select className="h-12 w-full rounded-[10px] border border-[#d8d8e4] bg-white px-4 text-sm font-medium text-[#1a1a6e] outline-none">
                 <option value="">Select a category</option>
                 <option value="beauty">Beauty</option>
                 <option value="lifestyle">Lifestyle</option>
@@ -97,229 +95,228 @@ export default function CreateCampaign() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1a1a6e]">Campaign Start Date</label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 uppercase"
-                  />
-                  <CalendarDays size={18} className="absolute right-3 top-3 text-gray-400 pointer-events-none hidden" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1a1a6e]">Campaign End Date</label>
+                <label className="block text-sm font-semibold text-[#2f3154]">Campaign Start Date</label>
                 <input
                   type="date"
-                  className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 uppercase"
+                  className="h-12 w-full rounded-[10px] border border-[#d8d8e4] px-4 text-sm font-medium text-[#1a1a6e] outline-none"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-[#2f3154]">Campaign End Date</label>
+                <input
+                  type="date"
+                  className="h-12 w-full rounded-[10px] border border-[#d8d8e4] px-4 text-sm font-medium text-[#1a1a6e] outline-none"
                 />
               </div>
             </div>
-          </section>
+            </section>
 
-          {/* Affiliate Terms */}
-          <section className="space-y-6 pt-6 border-t border-gray-100">
-            <h2 className="text-lg font-bold text-[#1a1a6e]">Affiliate Terms</h2>
-            
+            <section className="mt-8 space-y-5">
+              <SectionTitle title="Affiliate Terms" />
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Commission Rate (%)</label>
-              <input
-                type="number"
-                placeholder="e.g., 14"
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900"
-              />
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Commission Rate %</label>
+              <div className="relative">
+                <input
+                  type="number"
+                  placeholder="e.g., 15"
+                  className="h-12 w-full rounded-[10px] border border-[#d8d8e4] px-4 pr-10 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
+                />
+                <span className="absolute right-4 top-3.5 text-xs font-bold text-[#999ab2]">%</span>
+              </div>
+              <p className="text-xs text-[#9496ad]">This is what affiliates earn via TikTok Shop - paid directly by TikTok.</p>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Minimum Videos Required</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Minimum Videos Required</label>
               <input
                 type="number"
                 placeholder="e.g., 3"
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 mb-1"
+                className="h-12 w-full rounded-[10px] border border-[#d8d8e4] px-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
-              <p className="text-xs text-gray-500">Minimum number of videos an affiliate must post to qualify for prize pool entry.</p>
+              <p className="text-xs text-[#9496ad]">Minimum number of videos an affiliate must post to qualify for prize pool entry.</p>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">TikTok Shop Affiliate URL</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">TikTok Shop Affiliate URL</label>
               <div className="relative">
-                <div className="absolute left-4 top-3 text-gray-400 font-bold italic text-sm">♪</div>
+                <div className="absolute left-4 top-3 text-[16px] font-bold text-[#4b4d73]">♪</div>
                 <input
                   type="url"
                   placeholder="https://shop.tiktok.com/..."
-                  className="w-full pl-10 pr-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 mb-1"
+                  className="h-12 w-full rounded-[10px] border border-[#d8d8e4] pl-10 pr-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
                 />
               </div>
-              <p className="text-xs text-gray-500">Affiliates will be redirected here to opt in.</p>
+              <p className="text-xs text-[#9496ad]">Affiliates will be redirected here to opt in.</p>
             </div>
-          </section>
+            </section>
 
-          {/* Prize Pool */}
-          <section className="space-y-6 pt-6 border-t border-gray-100">
-            <h2 className="text-lg font-bold text-[#1a1a6e]">Prize Pool</h2>
-            
+            <section className="mt-8 space-y-5">
+              <SectionTitle title="Prize Pool" />
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Prize Pool Description</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Prize Pool Description</label>
               <textarea
-                placeholder="Describe the prizes — e.g., iPad, Apple Watch, camera. One raffle entry per qualifying video submitted."
+                placeholder="Describe the prizes -- e.g. iPad, Apple Watch, camera. One raffle entry per qualifying video submitted."
                 rows={3}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 resize-none mb-1"
+                className="w-full resize-none rounded-[10px] border border-[#d8d8e4] px-4 py-3 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
-              <p className="text-xs text-gray-500">Prize pool details are shown to affiliates on the campaign detail page.</p>
+              <p className="text-xs text-[#9496ad]">Prize pool details are shown to affiliates on the campaign detail page.</p>
             </div>
-          </section>
+            </section>
 
-          {/* Content Brief */}
-          <section className="space-y-6 pt-6 border-t border-gray-100">
-            <h2 className="text-lg font-bold text-[#1a1a6e]">Content Brief</h2>
-            
+            <section className="mt-8 space-y-5">
+              <SectionTitle title="Content Brief" />
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Product Overview</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Product Overview</label>
               <textarea
                 placeholder="Detailed overview of the product for affiliates..."
                 rows={3}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 resize-none"
+                className="w-full resize-none rounded-[10px] border border-[#d8d8e4] px-4 py-3 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1a1a6e]">Suggested Hook 1</label>
+                <label className="block text-[15px] font-semibold text-[#2f3154]">Suggested Hook 1</label>
                 <div className="relative">
-                  <Zap size={16} className="absolute left-4 top-3.5 text-[#e8445a]" />
+                  <Zap size={15} className="absolute left-4 top-3.5 text-[#ec3f82]" />
                   <input
                     type="text"
                     placeholder="Enter a suggested hook..."
-                    className="w-full pl-11 pr-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900"
+                    className="h-12 w-full rounded-[10px] border border-[#d8d8e4] pl-10 pr-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1a1a6e]">Suggested Hook 2</label>
+                <label className="block text-[15px] font-semibold text-[#2f3154]">Suggested Hook 2</label>
                 <div className="relative">
-                  <Zap size={16} className="absolute left-4 top-3.5 text-[#e8445a]" />
+                  <Zap size={15} className="absolute left-4 top-3.5 text-[#ec3f82]" />
                   <input
                     type="text"
                     placeholder="Enter a suggested hook..."
-                    className="w-full pl-11 pr-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900"
+                    className="h-12 w-full rounded-[10px] border border-[#d8d8e4] pl-10 pr-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-[#1a1a6e]">Suggested Hook 3</label>
+                <label className="block text-[15px] font-semibold text-[#2f3154]">Suggested Hook 3</label>
                 <div className="relative">
-                  <Zap size={16} className="absolute left-4 top-3.5 text-[#e8445a]" />
+                  <Zap size={15} className="absolute left-4 top-3.5 text-[#ec3f82]" />
                   <input
                     type="text"
                     placeholder="Enter a suggested hook..."
-                    className="w-full pl-11 pr-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900"
+                    className="h-12 w-full rounded-[10px] border border-[#d8d8e4] pl-10 pr-4 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
                   />
                 </div>
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Key Angles</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Key Angles</label>
               <textarea
                 placeholder="e.g. Morning routine, Before & After, Ingredient focus..."
                 rows={3}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 resize-none"
+                className="w-full resize-none rounded-[10px] border border-[#d8d8e4] px-4 py-3 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Content Guidelines Do&apos;s</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Content Guidelines Do&apos;s</label>
               <textarea
                 placeholder="What affiliates should do..."
                 rows={3}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 resize-none"
+                className="w-full resize-none rounded-[10px] border border-[#d8d8e4] px-4 py-3 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1a1a6e]">Content Guidelines Don&apos;ts</label>
+              <label className="block text-[15px] font-semibold text-[#2f3154]">Content Guidelines Don&apos;ts</label>
               <textarea
                 placeholder="What affiliates should avoid..."
                 rows={3}
-                className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#1a1a6e] text-sm text-gray-900 resize-none"
+                className="w-full resize-none rounded-[10px] border border-[#d8d8e4] px-4 py-3 text-sm font-medium text-[#1a1a6e] outline-none placeholder:text-sm placeholder:font-medium placeholder:text-[#b6b7c8]"
               />
             </div>
-          </section>
+            </section>
 
-          {/* Campaign Type */}
-          <section className="space-y-6 pt-6 border-t border-gray-100">
-            <h2 className="text-lg font-bold text-[#1a1a6e]">Campaign Type</h2>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div className="border-2 border-[#1a1a6e] rounded-xl p-5 relative bg-white cursor-pointer shadow-sm">
-                <div className="absolute right-4 top-4">
-                  <div className="w-4 h-4 rounded-full border-4 border-[#e8445a] bg-white flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a6e]"></div>
+            <section className="mt-8 space-y-5 pb-28">
+              <SectionTitle title="Campaign Type" />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="relative rounded-[12px] border border-[#1a1a6e] bg-white p-4">
+                  <div className="absolute right-4 top-4 flex h-4 w-4 items-center justify-center rounded-full border border-[#ec3f82] bg-white">
+                    <div className="h-2 w-2 rounded-full bg-[#ec3f82]" />
                   </div>
+                  <span className="mb-3 inline-block rounded-full bg-[#e7f8eb] px-3 py-1 text-[11px] font-bold text-[#3aa35f]">Active</span>
+                  <h3 className="mb-1 text-base font-bold leading-snug text-[#1a1a4b]">Open Plan</h3>
+                  <p className="max-w-[320px] text-sm leading-snug text-gray-600">Any affiliate can browse and opt in. No invite required.</p>
                 </div>
-                <span className="text-emerald-700 bg-emerald-50 text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-3">Active</span>
-                <h3 className="font-bold text-[#1a1a6e] mb-2 text-lg">Open Plan</h3>
-                <p className="text-sm text-gray-600">Any affiliate can browse and opt in. No invite required.</p>
-              </div>
 
-              <div className="border border-gray-200 rounded-xl p-5 relative bg-gray-50 opacity-60">
-                <span className="text-gray-500 bg-gray-200 text-xs font-bold px-2 py-0.5 rounded-full inline-block mb-3">Coming Soon</span>
-                <h3 className="font-bold text-gray-500 mb-2 text-lg">Targeted Plan</h3>
-                <p className="text-sm text-gray-500">Invite specific affiliates directly. Coming soon.</p>
+                <div className="rounded-[12px] border border-[#ececf2] bg-[#fafafd] p-4 opacity-60">
+                  <span className="mb-3 inline-block rounded-full bg-[#ececf2] px-3 py-1 text-[11px] font-bold text-[#9fa0b2]">Coming Soon</span>
+                  <h3 className="mb-1 text-base font-bold leading-snug text-gray-400">Targeted Plan</h3>
+                  <p className="max-w-[320px] text-sm leading-snug text-gray-400">Invite specific affiliates directly. Coming soon.</p>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
 
-        {/* Right Preview Column (Sticky) */}
-        <div className="w-[380px] shrink-0">
-          <div className="sticky top-24">
-            <h2 className="text-lg font-bold text-[#1a1a6e] mb-4">Campaign Preview</h2>
-            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm mb-4">
-              <div className="w-12 h-12 bg-[#e8445a]/80 rounded-lg flex items-center justify-center text-white font-bold text-xl mb-4 shadow-sm">
+        <div className="w-[380px] shrink-0 border-l border-[#e7e7ee] bg-[#fbfbfd] px-6 py-6">
+          <div className="sticky top-6">
+            <h2 className="mb-4 text-lg font-bold leading-tight text-[#1a1a4b]">Campaign Preview</h2>
+            <div className="mb-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div className="mb-3 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#ec3f82] text-base font-bold text-white">
                 ?
               </div>
-              <h3 className="font-bold text-[#1a1a6e] text-xl mb-1 leading-tight">
+              <h3 className="mb-1 text-base font-bold leading-snug text-[#1a1a4b]">
                 {campaignName || "Campaign Name"}
               </h3>
-              <p className="text-gray-500 text-sm mb-6 border-b border-gray-100 pb-5">
+              <p className="mb-4 border-b border-gray-100 pb-4 text-sm font-normal leading-snug text-gray-500">
                 {productName || "Product Name"}
               </p>
               <div className="flex">
-                <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full border border-emerald-100/50">
+                <span className="rounded-full bg-[#dcfce7] px-3 py-1 text-xs font-bold text-[#15803d]">
                   Open Plan
                 </span>
               </div>
             </div>
-            <p className="text-sm text-gray-500 font-medium">
+            <p className="text-sm font-normal leading-relaxed text-gray-500">
               This is how your campaign will appear to affiliates in the directory.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom Actions Footer */}
-      <div className="sticky bottom-0 bg-white border-t border-gray-200 px-8 py-5 flex items-center justify-between z-30 mt-auto ml-[195px] w-[calc(100%-195px)] fixed left-0 right-0">
+      <div className="z-20 flex shrink-0 items-center justify-between border-t border-[#e7e7ee] bg-white px-6 py-3">
         <button
           onClick={handleAction}
-          className="text-gray-400 font-medium text-sm hover:text-gray-600 transition-colors"
+          className="text-sm font-medium text-[#7f8097]"
         >
           Discard Changes
         </button>
         <div className="flex gap-3">
           <button
             onClick={handleAction}
-            className="px-6 py-2.5 rounded-md font-medium text-sm text-[#1a1a6e] border border-gray-200 hover:bg-gray-50 transition-colors bg-white shadow-sm"
+            className="rounded-[10px] border border-[#1a1a6e] bg-white px-6 py-2.5 text-sm font-semibold text-[#1a1a6e]"
           >
             Save Draft
           </button>
           <button
             onClick={handleAction}
-            className="px-6 py-2.5 rounded-md font-medium text-sm text-white bg-[#e8445a] hover:bg-[#d63d52] transition-colors shadow-sm"
+            className="rounded-[10px] bg-[#ec3f82] px-6 py-2.5 text-sm font-semibold text-white"
           >
             Publish Campaign →
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SectionTitle({ title }: { title: string }) {
+  return (
+    <div className="mb-1 flex items-center gap-4 border-b border-[#e8e8f0] pb-3">
+      <h2 className="text-lg font-bold leading-tight text-[#1a1a4b]">{title}</h2>
+      <div className="h-px flex-1 bg-[#ececf3]" />
     </div>
   );
 }
