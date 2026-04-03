@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ArrowLeft, CalendarDays, ClipboardList, Gift, Share2, ShieldCheck } from "lucide-react";
+import DesktopSidebarNav from "../../DesktopSidebarNav";
 
 const terms = [
   "Commission: 14% via TikTok Shop affiliate link",
@@ -13,17 +14,39 @@ const terms = [
 
 export default function CampaignDetailMain() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const isSummaryView = searchParams.get("view") === "summary";
+  const returnTo = searchParams.get("returnTo");
+  const backHref =
+    returnTo === "submissions"
+      ? "/affiliate/Mobile_page/mobile/submissions"
+      : returnTo === "my-campaigns"
+        ? "/affiliate/Mobile_page/mobile/my-campaigns"
+        : "/affiliate/Mobile_page/mobile";
+  const pageUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`
+      : pathname;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(pageUrl);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f7f8fc]">
-      <div className="mx-auto max-w-[1220px] lg:px-6 lg:py-8">
+      <div className="mx-auto max-w-[1280px] lg:px-6 lg:py-8">
         <div className="lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8">
-          <aside className="hidden lg:flex lg:flex-col lg:rounded-[28px] lg:bg-[#24145f] lg:px-6 lg:py-7 lg:text-white lg:shadow-[0_24px_80px_rgba(36,20,95,0.22)]">
-            <p className="text-xl font-semibold">ShopSlayer</p>
-            <p className="mt-1 text-sm text-white/65">Campaign Detail</p>
-
-            <div className="mt-10 rounded-3xl bg-white/10 p-5">
+          <DesktopSidebarNav sectionLabel="Campaign Detail">
+            <div className="rounded-3xl bg-white/10 p-5">
               <p className="text-sm text-white/70">Quick Summary</p>
               <p className="mt-3 text-3xl font-semibold">GlowLab Serum</p>
               <p className="mt-3 text-sm leading-6 text-white/75">
@@ -36,13 +59,13 @@ export default function CampaignDetailMain() {
               <div className="rounded-2xl bg-white/5 px-4 py-3">Campaign ends Mar 31</div>
               <div className="rounded-2xl bg-white/5 px-4 py-3">Open plan signup</div>
             </div>
-          </aside>
+          </DesktopSidebarNav>
 
           <main className="lg:rounded-[32px] lg:border lg:border-white/70 lg:bg-white lg:shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
             <div className="border-b border-[#eceff5] bg-white px-4 py-4 lg:rounded-t-[32px] lg:px-8 lg:py-6">
               <div className="flex items-center justify-between">
                 <Link
-                  href="/affiliate/Mobile_page/mobile"
+                  href={backHref}
                   className="flex items-center gap-2 text-[#2D1B69] transition-colors hover:text-[#E83A7A]"
                 >
                   <ArrowLeft className="h-5 w-5" />
@@ -55,6 +78,10 @@ export default function CampaignDetailMain() {
 
                 <button
                   type="button"
+                  onClick={() => {
+                    setShowShareModal(true);
+                    setCopied(false);
+                  }}
                   className="rounded-full p-2 text-[#2D1B69] transition-colors hover:bg-[#f4f1fb]"
                 >
                   <Share2 className="h-5 w-5" />
@@ -121,75 +148,111 @@ export default function CampaignDetailMain() {
                 </div>
               </section>
 
-              <aside className="space-y-4">
-                <div className="rounded-2xl bg-white p-4 shadow-sm lg:border lg:border-[#20145f] lg:p-6 lg:shadow-none">
-                  <h3 className="text-xl font-semibold text-[#20145f]">Your Content Brief</h3>
-                  <div className="mt-4 rounded-2xl border border-[#20145f] bg-[#fbfbff] px-4 py-8 text-center">
-                    <ClipboardList className="mx-auto h-10 w-10 text-[#20145f]" />
-                    <p className="mt-3 text-base font-semibold text-[#20145f]">
-                      Unlock your brief after opt in.
+              {!isSummaryView ? (
+                <aside className="space-y-4">
+                  <div className="rounded-2xl bg-white p-4 shadow-sm lg:border lg:border-[#20145f] lg:p-6 lg:shadow-none">
+                    <h3 className="text-xl font-semibold text-[#20145f]">Your Content Brief</h3>
+                    <div className="mt-4 rounded-2xl border border-[#20145f] bg-[#fbfbff] px-4 py-8 text-center">
+                      <ClipboardList className="mx-auto h-10 w-10 text-[#20145f]" />
+                      <p className="mt-3 text-base font-semibold text-[#20145f]">
+                        Unlock your brief after opt in.
+                      </p>
+                      <p className="mt-2 text-sm text-[#98a2b3]">
+                        Key messaging points, target audience, and content format suggestions appear here.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-4 shadow-sm lg:border lg:border-[#20145f] lg:p-6 lg:shadow-none">
+                    <div className="flex items-center gap-3">
+                      <ClipboardList className="h-5 w-5 text-[#20145f]" />
+                      <h3 className="text-xl font-semibold text-[#20145f]">Campaign Terms</h3>
+                    </div>
+
+                    <div className="mt-5 space-y-4">
+                      {terms.map((term) => (
+                        <div key={term} className="flex items-start gap-3">
+                          <ShieldCheck className="mt-0.5 h-5 w-5 text-[#22c55e]" />
+                          <p className="text-sm leading-6 text-[#344054]">{term}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 border-t border-[#dfe3ee] pt-4">
+                      <label className="flex items-start gap-3 text-sm text-[#344054]">
+                        <input
+                          type="checkbox"
+                          checked={agreedToTerms}
+                          onChange={(event) => setAgreedToTerms(event.target.checked)}
+                          className="mt-1 h-4 w-4 rounded border-[#98a2b3] accent-[#E83A7A]"
+                        />
+                        <span>I agree to these campaign terms</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-4 shadow-sm lg:border lg:border-[#eef1f6] lg:p-6 lg:shadow-none">
+                    <button
+                      type="button"
+                      disabled={!agreedToTerms}
+                      onClick={() => {
+                        if (agreedToTerms) {
+                          router.push("/affiliate/Mobile_page/mobile/campaign-confirmation");
+                        }
+                      }}
+                      className={`w-full rounded-full px-4 py-4 text-base font-semibold text-white transition-colors ${
+                        agreedToTerms
+                          ? "cursor-pointer bg-[#E83A7A] hover:bg-[#d92f6d]"
+                          : "cursor-not-allowed bg-[#dfe3ea]"
+                      }`}
+                    >
+                      Opt In on TikTok 
+                    </button>
+                    <p className="mt-3 text-center text-xs leading-5 text-[#98a2b3]">
+                      You&apos;ll be redirected to GlowLab Co.&apos;s TikTok Shop affiliate page. No product
+                      samples are guaranteed on open plan campaigns.
                     </p>
-                    <p className="mt-2 text-sm text-[#98a2b3]">
-                      Key messaging points, target audience, and content format suggestions appear here.
-                    </p>
                   </div>
-                </div>
-
-                <div className="rounded-2xl bg-white p-4 shadow-sm lg:border lg:border-[#20145f] lg:p-6 lg:shadow-none">
-                  <div className="flex items-center gap-3">
-                    <ClipboardList className="h-5 w-5 text-[#20145f]" />
-                    <h3 className="text-xl font-semibold text-[#20145f]">Campaign Terms</h3>
-                  </div>
-
-                  <div className="mt-5 space-y-4">
-                    {terms.map((term) => (
-                      <div key={term} className="flex items-start gap-3">
-                        <ShieldCheck className="mt-0.5 h-5 w-5 text-[#22c55e]" />
-                        <p className="text-sm leading-6 text-[#344054]">{term}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 border-t border-[#dfe3ee] pt-4">
-                    <label className="flex items-start gap-3 text-sm text-[#344054]">
-                      <input
-                        type="checkbox"
-                        checked={agreedToTerms}
-                        onChange={(event) => setAgreedToTerms(event.target.checked)}
-                        className="mt-1 h-4 w-4 rounded border-[#98a2b3] accent-[#E83A7A]"
-                      />
-                      <span>I agree to these campaign terms</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl bg-white p-4 shadow-sm lg:border lg:border-[#eef1f6] lg:p-6 lg:shadow-none">
-                  <button
-                    type="button"
-                    disabled={!agreedToTerms}
-                    onClick={() => {
-                      if (agreedToTerms) {
-                        router.push("/affiliate/Mobile_page/mobile/campaign-confirmation");
-                      }
-                    }}
-                    className={`w-full rounded-full px-4 py-4 text-base font-semibold text-white transition-colors ${
-                      agreedToTerms
-                        ? "cursor-pointer bg-[#E83A7A] hover:bg-[#d92f6d]"
-                        : "cursor-not-allowed bg-[#dfe3ea]"
-                    }`}
-                  >
-                    Opt In on TikTok -&gt;
-                  </button>
-                  <p className="mt-3 text-center text-xs leading-5 text-[#98a2b3]">
-                    You&apos;ll be redirected to GlowLab Co.&apos;s TikTok Shop affiliate page. No product
-                    samples are guaranteed on open plan campaigns.
-                  </p>
-                </div>
-              </aside>
+                </aside>
+              ) : null}
             </div>
           </main>
         </div>
       </div>
+
+      {showShareModal ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#101828]/45 px-4">
+          <div className="w-full max-w-[420px] rounded-[28px] bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.18)]">
+            <h2 className="text-xl font-semibold text-[#20145f]">Share Campaign</h2>
+            <p className="mt-2 text-sm text-[#667085]">
+              Copy this campaign page URL and share it anywhere you want.
+            </p>
+
+            <div className="mt-5 rounded-2xl border border-[#d0d5dd] bg-[#f8faff] p-4">
+              <p className="text-xs font-medium uppercase tracking-[0.08em] text-[#98a2b3]">
+                Page URL
+              </p>
+              <p className="mt-2 break-all text-sm text-[#20145f]">{pageUrl}</p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="mt-5 w-full rounded-xl bg-[#E83A7A] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d92f6d]"
+            >
+              {copied ? "Copied" : "Copy"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowShareModal(false)}
+              className="mt-3 w-full rounded-xl border border-[#20145f] px-4 py-3 text-sm font-semibold text-[#20145f]"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

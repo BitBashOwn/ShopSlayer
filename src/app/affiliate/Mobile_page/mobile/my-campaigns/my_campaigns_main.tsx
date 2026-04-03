@@ -5,96 +5,10 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CalendarDays, FolderOpen } from "lucide-react";
 import BottomNav from "../../BottomNav";
+import DesktopSidebarNav from "../../DesktopSidebarNav";
+import { getVideoSubmissionHref, mobileCampaigns } from "../../mobileCampaignData";
 
 type TabKey = "All" | "In Progress" | "Completed";
-
-type Campaign = {
-  initials: string;
-  name: string;
-  brand: string;
-  niche: string;
-  dates: string;
-  status: "Active" | "Video Submitted" | "Completed";
-  accent: string;
-  badge: string;
-  initialsBg: string;
-  filter: Exclude<TabKey, "All">;
-  briefHref: string;
-  primaryHref: string;
-};
-
-const campaigns: Campaign[] = [
-  {
-    initials: "GL",
-    name: "GlowLab Serum",
-    brand: "GlowLab Co.",
-    niche: "Beauty",
-    dates: "Mar 10-31",
-    status: "Active",
-    accent: "bg-[#ff4d8d]",
-    badge: "bg-green-100 text-green-600",
-    initialsBg: "bg-[#625df5]",
-    filter: "In Progress",
-    briefHref: "/affiliate/Mobile_page/mobile/content-brief",
-    primaryHref: "/affiliate/Mobile_page/mobile/campaign-confirmation",
-  },
-  {
-    initials: "NT",
-    name: "NovaBuds Pro Earphones",
-    brand: "NovaTech",
-    niche: "Tech",
-    dates: "Mar 15-Apr 5",
-    status: "Video Submitted",
-    accent: "bg-[#f59e0b]",
-    badge: "bg-yellow-100 text-yellow-700",
-    initialsBg: "bg-[#7c5cff]",
-    filter: "In Progress",
-    briefHref: "/affiliate/Mobile_page/mobile/content-brief",
-    primaryHref: "/affiliate/Mobile_page/mobile/campaign-confirmation",
-  },
-  {
-    initials: "BB",
-    name: "Bloom Lip Butter",
-    brand: "Bloom Beauty",
-    niche: "Beauty",
-    dates: "Mar 20-Apr 10",
-    status: "Active",
-    accent: "bg-[#ff4d8d]",
-    badge: "bg-green-100 text-green-600",
-    initialsBg: "bg-[#ec4899]",
-    filter: "In Progress",
-    briefHref: "/affiliate/Mobile_page/mobile/content-brief",
-    primaryHref: "/affiliate/Mobile_page/mobile/campaign-confirmation",
-  },
-  {
-    initials: "SV",
-    name: "SnapCam Mini",
-    brand: "SnapVision",
-    niche: "Tech",
-    dates: "Apr 1-Apr 12",
-    status: "Active",
-    accent: "bg-[#ff4d8d]",
-    badge: "bg-green-100 text-green-600",
-    initialsBg: "bg-[#14b8a6]",
-    filter: "In Progress",
-    briefHref: "/affiliate/Mobile_page/mobile/content-brief",
-    primaryHref: "/affiliate/Mobile_page/mobile/campaign-confirmation",
-  },
-  {
-    initials: "LD",
-    name: "LumenDesk Ring Light",
-    brand: "LumenDesk Co.",
-    niche: "Gadgets",
-    dates: "Feb 1-28",
-    status: "Completed",
-    accent: "bg-[#10b981]",
-    badge: "bg-slate-100 text-slate-600",
-    initialsBg: "bg-[#f59e0b]",
-    filter: "Completed",
-    briefHref: "/affiliate/Mobile_page/mobile/campaign-detail",
-    primaryHref: "/affiliate/Mobile_page/mobile/campaign-detail",
-  },
-];
 
 export default function MyCampaignsMain() {
   const router = useRouter();
@@ -102,19 +16,19 @@ export default function MyCampaignsMain() {
 
   const tabCounts = useMemo(
     () => ({
-      All: campaigns.length,
-      "In Progress": campaigns.filter((campaign) => campaign.filter === "In Progress").length,
-      Completed: campaigns.filter((campaign) => campaign.filter === "Completed").length,
+      All: mobileCampaigns.length,
+      "In Progress": mobileCampaigns.filter((campaign) => campaign.filter === "In Progress").length,
+      Completed: mobileCampaigns.filter((campaign) => campaign.filter === "Completed").length,
     }),
     [],
   );
 
   const visibleCampaigns = useMemo(() => {
     if (activeTab === "All") {
-      return campaigns;
+      return mobileCampaigns;
     }
 
-    return campaigns.filter((campaign) => campaign.filter === activeTab);
+    return mobileCampaigns.filter((campaign) => campaign.filter === activeTab);
   }, [activeTab]);
 
   const tabs: { label: TabKey; count: number }[] = [
@@ -125,18 +39,15 @@ export default function MyCampaignsMain() {
 
   return (
     <div className="min-h-screen bg-[#f7f8fc] pb-20 lg:pb-0">
-      <div className="mx-auto max-w-[1220px] lg:px-6 lg:py-8">
+      <div className="mx-auto max-w-[1280px] lg:px-6 lg:py-8">
         <div className="lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8">
-          <aside className="hidden lg:flex lg:flex-col lg:rounded-[28px] lg:bg-[#24145f] lg:px-6 lg:py-7 lg:text-white lg:shadow-[0_24px_80px_rgba(36,20,95,0.22)]">
-            <p className="text-xl font-semibold">ShopSlayer</p>
-            <p className="mt-1 text-sm text-white/65">My Campaigns</p>
-
-            <div className="mt-10 rounded-3xl bg-white/10 p-5">
+          <DesktopSidebarNav sectionLabel="My Campaigns">
+            <div className="rounded-3xl bg-white/10 p-5">
               <p className="text-sm text-white/70">Current count</p>
               <p className="mt-3 text-4xl font-semibold">{tabCounts["In Progress"]}</p>
               <p className="mt-2 text-sm text-white/75">Active campaigns in your workspace</p>
             </div>
-          </aside>
+          </DesktopSidebarNav>
 
           <main className="min-h-screen bg-white lg:min-h-0 lg:rounded-[32px] lg:border lg:border-white/70 lg:shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
             <div className="border-b border-[#eceff5] px-4 py-4 lg:rounded-t-[32px] lg:px-8 lg:py-6">
@@ -207,7 +118,11 @@ export default function MyCampaignsMain() {
 
                       <div className="mt-4 flex gap-3">
                         <Link
-                          href={campaign.briefHref}
+                          href={
+                            campaign.filter === "Completed"
+                              ? "/affiliate/Mobile_page/mobile/campaign-detail?view=summary&returnTo=my-campaigns"
+                              : campaign.briefHref
+                          }
                           className="flex-1 rounded-xl border border-[#20145f] px-4 py-3 text-center text-sm font-semibold text-[#20145f]"
                         >
                           {campaign.filter === "Completed" ? "View Summary" : "View Brief"}
@@ -216,10 +131,10 @@ export default function MyCampaignsMain() {
                         {campaign.filter === "In Progress" ? (
                           <button
                             type="button"
-                            onClick={() => router.push(campaign.primaryHref)}
+                            onClick={() => router.push(getVideoSubmissionHref(campaign.id))}
                             className="flex-1 rounded-xl bg-[#E83A7A] px-4 py-3 text-sm font-semibold text-white"
                           >
-                            Submit Video -&gt;
+                            Submit Video 
                           </button>
                         ) : null}
                       </div>

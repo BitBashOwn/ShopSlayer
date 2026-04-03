@@ -27,7 +27,7 @@ export default function CampaignManagementMain() {
     <main className="h-screen overflow-y-auto">
       <div className="border-b border-[#dde3ee] bg-white px-6 py-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <h1 className="text-[18px] font-semibold text-[#1C1259]">
+          <h1 className="text-[28px] font-bold leading-tight text-[#1C1259]">
             Campaign Management
           </h1>
 
@@ -37,7 +37,7 @@ export default function CampaignManagementMain() {
               <input
                 type="text"
                 placeholder="Search campaigns or brands..."
-                className="w-full bg-transparent text-sm text-[#344054] outline-none placeholder:text-[#98a2b3]"
+                className="w-full bg-transparent text-[15px] text-[#344054] outline-none placeholder:text-[#98a2b3]"
               />
             </div>
 
@@ -45,7 +45,7 @@ export default function CampaignManagementMain() {
               <button
                 type="button"
                 onClick={() => setIsStatusOpen((open) => !open)}
-                className={`flex h-11 min-w-[170px] items-center justify-between rounded-full border bg-white px-4 text-sm font-medium text-[#111827] shadow-[0_1px_2px_rgba(17,24,39,0.04)] transition-colors ${
+                className={`flex h-11 min-w-[170px] items-center justify-between rounded-full border bg-white px-4 text-[15px] font-medium text-[#111827] shadow-[0_1px_2px_rgba(17,24,39,0.04)] transition-colors ${
                   isStatusOpen
                     ? "border-[#E83A7A]"
                     : "border-[#cfd6e4] hover:border-[#b9c3d4]"
@@ -72,7 +72,7 @@ export default function CampaignManagementMain() {
                           setSelectedStatus(option);
                           setIsStatusOpen(false);
                         }}
-                        className={`flex w-full items-center px-4 py-2.5 text-left text-sm transition-colors ${
+                        className={`flex w-full items-center px-4 py-2.5 text-left text-[15px] transition-colors ${
                           isSelected
                             ? "bg-[#fff0f6] font-semibold text-[#E83A7A]"
                             : "text-[#344054] hover:bg-[#fff4f8] hover:text-[#E83A7A]"

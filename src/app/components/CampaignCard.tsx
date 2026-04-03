@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { Gift, Lock, WalletCards } from "lucide-react";
 
 type Props = {
   title: string;
   brand: string;
   earning: string;
   category: string;
+  accentColor?: string;
+  planLabel?: string;
   locked?: boolean;
 };
 
@@ -13,66 +16,72 @@ export default function CampaignCard({
   brand,
   earning,
   category,
-  locked,
+  accentColor = "#22c3b5",
+  planLabel = "Open Plan",
+  locked = false,
 }: Props) {
   if (locked) {
     return (
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 h-[210px] flex flex-col items-center justify-center text-center transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
-        
-        <div className="w-12 h-12 rounded-full bg-[#2D1B69] text-white flex items-center justify-center text-lg mb-3">
-          🔒
+      <div className="flex min-h-[210px] flex-col items-center justify-center rounded-2xl border border-[#e4e7ec] bg-white p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2D1B69] text-white">
+          <Lock className="h-5 w-5" />
         </div>
 
-        <p className="text-[14px] font-semibold text-gray-800">
+        <p className="mt-4 text-[20px] font-semibold leading-tight text-[#2D1B69]">
           Join to view this campaign
         </p>
 
-        <p className="text-[12px] text-gray-500 mt-1 mb-4">
+        <p className="mt-2 text-[13px] text-[#667085]">
           Create a free account to opt in
         </p>
-        <Link href="/affiliate/signup">
-          <button className="bg-[#FF4D8D] text-white text-[12px] px-4 py-2 rounded-lg font-medium hover:bg-[#e8437f] transition cursor-pointer">
+
+        <Link href="/affiliate/signup" className="mt-5">
+          <span className="inline-flex rounded-xl bg-[#FF4D8D] px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-[#e8437f]">
             Get Started →
-          </button>
+          </span>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-5 h-[210px] flex flex-col justify-between transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-gray-300">
-      
-      {/* Brand */}
-      <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md bg-gradient-to-br from-green-400 to-green-600" />
-        <p className="text-[12px] text-gray-500">{brand}</p>
+    <Link
+      href="/affiliate/signup"
+      className="block min-h-[210px] rounded-2xl border border-[#e4e7ec] bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-[#d0d5dd] hover:shadow-md"
+    >
+      <div className="flex items-center gap-2.5">
+        <div
+          className="h-6 w-6 rounded-lg"
+          style={{ backgroundColor: accentColor }}
+          aria-hidden="true"
+        />
+        <p className="text-[11px] text-[#98A2B3]">{brand}</p>
       </div>
 
-      {/* Title */}
-      <h3 className="text-[13px] font-semibold text-gray-900 leading-snug mt-2">
+      <h3 className="mt-5 text-[14px] font-semibold leading-snug text-[#2D1B69]">
         {title}
       </h3>
 
-      {/* Earnings */}
-      <div className="mt-2 space-y-[2px]">
-        <p className="text-[12px] text-[#FF4D8D] font-medium">
-          🪙 {earning}
+      <div className="mt-4 space-y-2">
+        <p className="flex items-center gap-2 text-[13px] font-medium text-[#FF4D8D]">
+          <WalletCards className="h-4 w-4 text-[#f4b400]" />
+          <span>{earning}</span>
         </p>
-        <p className="text-[12px] text-green-600">
-          🎁 + Prize Pool Bonus
+        <p className="flex items-center gap-2 text-[13px] font-medium text-[#18B67C]">
+          <Gift className="h-4 w-4 text-[#ff9f1c]" />
+          <span>+ Prize Pool Bonus</span>
         </p>
       </div>
 
-      {/* Tags */}
-      <div className="flex justify-between items-center mt-3">
-        <span className="text-[10px] px-2 py-[3px] rounded-full bg-blue-50 text-blue-600">
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <span className="rounded-full bg-[#eef3ff] px-2.5 py-1 text-[10px] text-[#5b78f6]">
           {category}
         </span>
 
-        <span className="text-[10px] px-2 py-[3px] rounded-full bg-green-50 text-green-600">
-          Open Plan
+        <span className="rounded-full bg-[#edfdf4] px-2.5 py-1 text-[10px] text-[#15a05d]">
+          {planLabel}
         </span>
       </div>
-    </div>
+    </Link>
   );
 }

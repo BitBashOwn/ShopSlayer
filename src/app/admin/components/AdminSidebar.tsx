@@ -60,7 +60,7 @@ export default function AdminSidebar() {
               <Link
                 key={href}
                 href={href}
-                className={`flex items-center gap-3 rounded-2xl py-3 pl-4 pr-3 text-[14px] font-semibold transition-colors ${
+                className={`flex cursor-pointer items-center gap-3 rounded-2xl py-3 pl-4 pr-3 text-[14px] font-semibold transition-colors ${
                   active
                     ? "border-l-[3px] text-white shadow-sm"
                     : "border-l-[5px] border-l-transparent text-white hover:bg-white/[0.08]"
@@ -94,7 +94,7 @@ export default function AdminSidebar() {
         </p>
         <Link
           href="/admin/login"
-          className="mt-4 flex items-center gap-2 text-[13px] font-medium transition-colors hover:text-white"
+          className="mt-4 flex cursor-pointer items-center gap-2 text-[13px] font-medium transition-colors hover:text-white"
           style={{ color: "#C8C2E8" }}
         >
           <LogOut className="h-4 w-4" strokeWidth={1.75} />
