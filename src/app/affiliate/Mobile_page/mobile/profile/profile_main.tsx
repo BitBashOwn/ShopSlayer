@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -14,6 +15,11 @@ import {
 } from "lucide-react";
 import BottomNav from "../../BottomNav";
 import DesktopSidebarNav from "../../DesktopSidebarNav";
+import {
+  readStoredAffiliateProfile,
+  writeStoredAffiliateProfile,
+  type AffiliateProfile,
+} from "../../affiliateProfileStorage";
 
 const stats = [
   { value: "6", label: "Campaigns", sublabel: "Joined" },
@@ -24,20 +30,6 @@ const stats = [
 type DetailKey = "email" | "handle" | "niche";
 type ModalType = "profile" | DetailKey | null;
 
-type ProfileState = {
-  fullName: string;
-  handle: string;
-  niche: string;
-  email: string;
-};
-
-const initialProfile: ProfileState = {
-  fullName: "Sarah Cruz",
-  handle: "@sarahcreates",
-  niche: "Beauty & Lifestyle",
-  email: "sarah@email.com",
-};
-
 function ProfileEditModal({
   type,
   profile,
@@ -46,16 +38,20 @@ function ProfileEditModal({
   onSaveField,
 }: {
   type: Exclude<ModalType, null>;
-  profile: ProfileState;
+  profile: AffiliateProfile;
   onClose: () => void;
-  onSaveProfile: (nextProfile: Pick<ProfileState, "fullName" | "handle" | "niche">) => void;
+  onSaveProfile: (
+    nextProfile: Pick<AffiliateProfile, "fullName" | "handle" | "niche" | "avatarUrl">,
+  ) => void;
   onSaveField: (field: DetailKey, value: string) => void;
 }) {
   const [profileDraft, setProfileDraft] = useState({
     fullName: profile.fullName,
     handle: profile.handle,
     niche: profile.niche,
+    avatarUrl: profile.avatarUrl,
   });
+  const [imageError, setImageError] = useState("");
   const [fieldDraft, setFieldDraft] = useState(
     type === "email" ? profile.email : type === "handle" ? profile.handle : profile.niche,
   );
@@ -72,12 +68,34 @@ function ProfileEditModal({
   const fieldLabel =
     type === "email" ? "Email" : type === "handle" ? "TikTok Handle" : "Content Niche";
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    if (!["image/png", "image/jpeg", "image/jpg", "image/webp"].includes(file.type)) {
+      setImageError("Upload a PNG, JPG, or WEBP image.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setProfileDraft((current) => ({ ...current, avatarUrl: reader.result }));
+        setImageError("");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSave = () => {
     if (type === "profile") {
       onSaveProfile({
         fullName: profileDraft.fullName.trim() || profile.fullName,
         handle: profileDraft.handle.trim() || profile.handle,
         niche: profileDraft.niche.trim() || profile.niche,
+        avatarUrl: profileDraft.avatarUrl.trim(),
       });
       onClose();
       return;
@@ -138,6 +156,25 @@ function ProfileEditModal({
                 className="mt-2 w-full rounded-2xl border border-[#d0d5dd] px-4 py-3 text-sm text-[#20145f] outline-none focus:border-[#3b38b8]"
               />
             </label>
+
+            <div>
+              <span className="text-sm font-medium text-[#344054]">Upload Profile Image</span>
+              <label className="mt-2 flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-[#d0d5dd] px-4 py-4 text-sm text-[#667085] transition-colors hover:border-[#3b38b8] hover:bg-[#f8faff]">
+                <input
+                  type="file"
+                  accept=".png,.jpg,.jpeg,.webp"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+                Choose PNG, JPG, or WEBP
+              </label>
+              {profileDraft.avatarUrl ? (
+                <p className="mt-2 text-xs text-[#667085]">Image selected successfully.</p>
+              ) : null}
+              {imageError ? (
+                <p className="mt-2 text-xs text-[#d92f6d]">{imageError}</p>
+              ) : null}
+            </div>
           </div>
         ) : (
           <div className="mt-5">
@@ -176,7 +213,7 @@ function ProfileEditModal({
 
 export default function ProfileMain() {
   const router = useRouter();
-  const [profile, setProfile] = useState(initialProfile);
+  const [profile, setProfile] = useState<AffiliateProfile>(() => readStoredAffiliateProfile());
   const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   const initials = useMemo(() => {
@@ -234,9 +271,19 @@ export default function ProfileMain() {
             <div className="px-4 py-5 lg:px-8 lg:py-8">
               <div className="mx-auto max-w-[620px]">
                 <div className="rounded-[28px] bg-white text-center">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#3b38b8] text-[28px] font-semibold text-white">
-                    {initials}
-                  </div>
+                  {profile.avatarUrl ? (
+                    <Image
+                      src={profile.avatarUrl}
+                      alt={profile.fullName}
+                      width={80}
+                      height={80}
+                      className="mx-auto rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#3b38b8] text-[28px] font-semibold text-white">
+                      {initials}
+                    </div>
+                  )}
 
                   <h2 className="mt-4 text-[32px] font-semibold leading-tight text-[#20145f]">
                     {profile.fullName}
@@ -324,16 +371,24 @@ export default function ProfileMain() {
           profile={profile}
           onClose={() => setActiveModal(null)}
           onSaveProfile={(nextProfile) =>
-            setProfile((current) => ({
-              ...current,
-              ...nextProfile,
-            }))
+            setProfile((current) => {
+              const updatedProfile = {
+                ...current,
+                ...nextProfile,
+              };
+              writeStoredAffiliateProfile(updatedProfile);
+              return updatedProfile;
+            })
           }
           onSaveField={(field, value) =>
-            setProfile((current) => ({
-              ...current,
-              [field]: value || current[field],
-            }))
+            setProfile((current) => {
+              const updatedProfile = {
+                ...current,
+                [field]: value || current[field],
+              };
+              writeStoredAffiliateProfile(updatedProfile);
+              return updatedProfile;
+            })
           }
         />
       ) : null}

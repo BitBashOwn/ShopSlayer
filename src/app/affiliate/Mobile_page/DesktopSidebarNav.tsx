@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { ReactNode } from "react";
 import { affiliateNavItems } from "./affiliateNavItems";
 
@@ -48,7 +49,21 @@ export default function DesktopSidebarNav({
 
       {children ? <div className="mt-8">{children}</div> : null}
 
-      {footer ? <div className="mt-auto pt-8">{footer}</div> : null}
+      <div className="mt-auto pt-8">
+        {footer ? <div>{footer}</div> : null}
+
+        <div className="border-t border-white/10 pt-5">
+          <p className="text-[11px] text-white/60">Logged in as</p>
+          <p className="mt-1 text-[13px] font-bold text-white">Affiliate</p>
+          <Link
+            href="/"
+            className="mt-4 flex cursor-pointer items-center gap-2 text-[13px] font-medium text-white/80 transition-colors hover:text-white"
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Log Out</span>
+          </Link>
+        </div>
+      </div>
     </aside>
   );
 }

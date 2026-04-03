@@ -16,9 +16,12 @@ export const affiliateNavItems: AffiliateNavItem[] = [
   },
   {
     label: "Campaigns",
-    href: "/affiliate/Mobile_page/mobile",
+    href: "/affiliate/Mobile_page/mobile/campaigns",
     icon: FileText,
-    paths: ["/affiliate/Mobile_page/mobile/campaign-detail"],
+    paths: [
+      "/affiliate/Mobile_page/mobile/campaigns",
+      "/affiliate/Mobile_page/mobile/campaign-detail",
+    ],
   },
   {
     label: "My Campaigns",
