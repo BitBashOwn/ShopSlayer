@@ -1,12 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import MobileHeader from "../MobileHeader";
 import MyCampaignsCard from "../MyCampaignsCard";
-import ExploreTabs from "../ExploreTabs";
 import MobileCampaignCard from "../MobileCampaignCard";
 import BottomNav from "../BottomNav";
 import DesktopSidebarNav from "../DesktopSidebarNav";
-import { useMemo, useState } from "react";
 
 const campaigns = [
   {
@@ -72,16 +71,6 @@ const campaigns = [
 ];
 
 export default function MobileMain() {
-  const [activeTab, setActiveTab] = useState("All");
-
-  const filteredCampaigns = useMemo(() => {
-    if (activeTab === "All") {
-      return campaigns;
-    }
-
-    return campaigns.filter((campaign) => campaign.type === activeTab);
-  }, [activeTab]);
-
   return (
     <div className="min-h-screen bg-[#F5F6FA] pb-20 lg:pb-0">
       <div className="mx-auto max-w-[1280px] lg:grid lg:min-h-screen lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 lg:px-6 lg:py-8">
@@ -102,10 +91,26 @@ export default function MobileMain() {
             <div className="px-4 lg:flex-1 lg:overflow-y-auto lg:px-8 lg:pb-8">
               <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
                 <section>
-                  <ExploreTabs activeTab={activeTab} onTabChange={setActiveTab} />
+                  <div className="mt-6 flex items-end justify-between lg:mt-8">
+                    <div>
+                      <h3 className="text-sm font-semibold text-[#2D1B69] lg:text-xl">
+                        Explore
+                      </h3>
+                      <p className="mt-1 text-xs text-gray-500 lg:mt-2 lg:text-sm">
+                        Featured campaigns available now
+                      </p>
+                    </div>
+
+                    <Link
+                      href="/affiliate/Mobile_page/mobile/campaigns"
+                      className="text-xs font-medium text-[#E83A7A] transition hover:underline lg:text-sm"
+                    >
+                      View All
+                    </Link>
+                  </div>
 
                   <div className="mt-4 space-y-4 lg:mt-6 lg:grid lg:grid-cols-2 lg:gap-5 lg:space-y-0">
-                    {filteredCampaigns.map((campaign) => (
+                    {campaigns.slice(0, 4).map((campaign) => (
                       <MobileCampaignCard
                         key={campaign.title}
                         brand={campaign.brand}

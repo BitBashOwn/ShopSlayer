@@ -84,6 +84,10 @@ export default function AdminSettingsPage() {
 
   const [adminEmail, setAdminEmail] = useState("admin@huskeedigital.com");
   const [sessionTimeout, setSessionTimeout] = useState("30 minutes");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
 
   return (
     <AdminShell>
@@ -306,6 +310,82 @@ export default function AdminSettingsPage() {
                 </select>
               }
             />
+
+            <div className="rounded-xl border border-[#edf0f5] px-4 py-4">
+              <div>
+                <p className="text-[14px] font-semibold text-[#1C1259]">Change password</p>
+                <p className="mt-1 text-[13px] text-gray-500">
+                  Update the admin account password from this settings screen.
+                </p>
+              </div>
+
+              <div className="mt-4 space-y-3">
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => {
+                    setCurrentPassword(e.target.value);
+                    setPasswordMessage("");
+                  }}
+                  placeholder="Current password"
+                  className="w-full rounded-xl border border-[#d0d5dd] px-4 py-3 text-[14px] text-[#1C1259] outline-none"
+                />
+
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                    setPasswordMessage("");
+                  }}
+                  placeholder="New password"
+                  className="w-full rounded-xl border border-[#d0d5dd] px-4 py-3 text-[14px] text-[#1C1259] outline-none"
+                />
+
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setPasswordMessage("");
+                  }}
+                  placeholder="Confirm new password"
+                  className="w-full rounded-xl border border-[#d0d5dd] px-4 py-3 text-[14px] text-[#1C1259] outline-none"
+                />
+              </div>
+
+              {passwordMessage ? (
+                <p className="mt-3 text-[13px] text-[#E83A7A]">{passwordMessage}</p>
+              ) : null}
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (!currentPassword || !newPassword || !confirmPassword) {
+                    setPasswordMessage("Fill in all password fields to continue.");
+                    return;
+                  }
+
+                  if (newPassword.length < 8) {
+                    setPasswordMessage("New password must be at least 8 characters.");
+                    return;
+                  }
+
+                  if (newPassword !== confirmPassword) {
+                    setPasswordMessage("New password and confirm password must match.");
+                    return;
+                  }
+
+                  setPasswordMessage("Password updated successfully.");
+                  setCurrentPassword("");
+                  setNewPassword("");
+                  setConfirmPassword("");
+                }}
+                className="mt-4 cursor-pointer rounded-full border border-[#1C1259] px-5 py-3 text-[14px] font-semibold text-[#1C1259] transition-colors hover:bg-[#f7f8fc]"
+              >
+                Change Password
+              </button>
+            </div>
 
             <div className="rounded-xl border border-[#ffe7a3] bg-[#fff9e8] px-4 py-4">
               <p className="text-[14px] font-semibold text-[#1C1259]">Two-factor authentication</p>
