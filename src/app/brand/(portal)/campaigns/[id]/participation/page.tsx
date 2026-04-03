@@ -1,13 +1,66 @@
 "use client";
 
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, User, Video, Clock, Search, ChevronDown, ExternalLink } from "lucide-react";
+import { User, Video, Clock, Search, ChevronDown, ExternalLink, X } from "lucide-react";
+
+const TIKTOK_SAMPLE_A =
+  "https://www.tiktok.com/@funny.veb5/video/7609753237364755743?is_from_webapp=1&sender_device=pc";
+const TIKTOK_SAMPLE_B =
+  "https://www.tiktok.com/@its_me_with_max/video/7616936451002879250?is_from_webapp=1&sender_device=pc";
+
+/** TikTok web URL → embed iframe src (official embed v2). */
+function getTikTokEmbedSrc(pageUrl: string): string | null {
+  const m = pageUrl.match(/video\/(\d+)/);
+  if (!m) return null;
+  return `https://www.tiktok.com/embed/v2/${m[1]}?autoplay=1`;
+}
+
+type TableRow = {
+  handle: string;
+  niche: string;
+  date: string;
+  status: string;
+  videoLink: string;
+  /** Full TikTok page URL for modal embed; omitted = no View Video */
+  videoUrl?: string;
+  color: string;
+};
 
 export default function ParticipationView() {
-  const tableData = [
-    { handle: "@sarahcreates", niche: "Beauty & Lifestyle", date: "Mar 11, 2026", status: "Video Submitted", videoLink: "tiktok.com/sarahcreates/v...", color: "emerald" },
+  const [modalEmbedSrc, setModalEmbedSrc] = useState<string | null>(null);
+
+  const closeModal = useCallback(() => setModalEmbedSrc(null), []);
+
+  useEffect(() => {
+    if (!modalEmbedSrc) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [modalEmbedSrc, closeModal]);
+
+  const tableData: TableRow[] = [
+    {
+      handle: "@sarahcreates",
+      niche: "Beauty & Lifestyle",
+      date: "Mar 11, 2026",
+      status: "Video Submitted",
+      videoLink: "tiktok.com/@funny.veb5/video/7609753237...",
+      videoUrl: TIKTOK_SAMPLE_A,
+      color: "emerald",
+    },
     { handle: "@techwithtom", niche: "Tech & Gadgets", date: "Mar 12, 2026", status: "Pending Submission", videoLink: "", color: "amber" },
-    { handle: "@glowguru", niche: "Skincare", date: "Mar 13, 2026", status: "Video Submitted", videoLink: "tiktok.com/glowguru/vide...", color: "emerald" },
+    {
+      handle: "@glowguru",
+      niche: "Skincare",
+      date: "Mar 13, 2026",
+      status: "Video Submitted",
+      videoLink: "tiktok.com/@its_me_with_max/video/7616936...",
+      videoUrl: TIKTOK_SAMPLE_B,
+      color: "emerald",
+    },
     { handle: "@dailywithdan", niche: "Lifestyle", date: "Mar 14, 2026", status: "Pending Submission", videoLink: "", color: "amber" },
     { handle: "@beautybynia", niche: "Beauty", date: "Mar 15, 2026", status: "Video Submitted", videoLink: "tiktok.com/beautybynia/vi...", color: "emerald" },
     { handle: "@fitandfresh", niche: "Lifestyle", date: "Mar 16, 2026", status: "Pending Submission", videoLink: "", color: "amber" },
@@ -159,8 +212,15 @@ export default function ParticipationView() {
                         )}
                       </td>
                       <td className="px-6 py-5 text-right">
-                        {row.videoLink ? (
-                          <button className="text-sm font-bold text-[#e8445a] hover:opacity-80 transition-opacity">
+                        {row.videoUrl ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const src = getTikTokEmbedSrc(row.videoUrl!);
+                              if (src) setModalEmbedSrc(src);
+                            }}
+                            className="text-sm font-bold text-[#F43F5E] hover:opacity-80 transition-opacity"
+                          >
                             View Video
                           </button>
                         ) : (
@@ -201,6 +261,43 @@ export default function ParticipationView() {
           </div>
         </div>
       </div>
+
+      {modalEmbedSrc ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+          role="presentation"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeModal();
+          }}
+        >
+          <div
+            className="relative flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-label="TikTok video"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeModal}
+              className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-lg bg-white/95 text-[#6B7280] shadow-sm transition-colors hover:bg-gray-100 hover:text-[#374151]"
+              aria-label="Close video"
+            >
+              <X size={20} strokeWidth={2} />
+            </button>
+            <div className="w-full shrink-0 bg-black" style={{ height: "min(85vh, 720px)" }}>
+              <iframe
+                key={modalEmbedSrc}
+                src={modalEmbedSrc}
+                title="TikTok video"
+                className="h-full w-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

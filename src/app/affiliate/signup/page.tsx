@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, ArrowRight, AtSign } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, AtSign, Check, X } from "lucide-react";
 
 export default function AffiliateSignup() {
   const [fullName, setFullName] = useState("");
@@ -11,6 +11,7 @@ export default function AffiliateSignup() {
   const [password, setPassword] = useState("");
   const [niche, setNiche] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const isFormValid =
@@ -81,13 +82,35 @@ export default function AffiliateSignup() {
             </select>
           </div>
 
-          <div className="flex items-center pt-2">
-            <input id="terms" type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)}
-              className="h-5 w-5 text-[#1a1a6e] border-gray-300 rounded" />
-            <label htmlFor="terms" className="ml-3 text-sm text-gray-700">
-              I agree to ShopSlayer&apos;s{" "}
-              <a href="#" className="text-[#e8445a] underline">Terms & Conditions</a>.
+          <div className="flex items-center gap-[10px] pt-2">
+            <input
+              id="affiliate-signup-terms"
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="sr-only"
+            />
+            <label
+              htmlFor="affiliate-signup-terms"
+              className={`flex h-[18px] w-[18px] shrink-0 cursor-pointer items-center justify-center rounded border-[1.5px] transition-colors focus-within:ring-2 focus-within:ring-[#1E1B4B] focus-within:ring-offset-2 ${
+                agreed
+                  ? "border-[#1E1B4B] bg-[#1E1B4B]"
+                  : "border-[#D1D5DB] bg-white"
+              }`}
+            >
+              {agreed ? <Check className="text-white" size={12} strokeWidth={3} /> : null}
             </label>
+            <span className="text-left text-[14px] text-[#374151]">
+              I agree to ShopSlayer&apos;s{" "}
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
+                className="cursor-pointer font-normal text-[#F43F5E] underline decoration-[#F43F5E] transition-colors hover:text-[#E11D48]"
+              >
+                Terms & Conditions
+              </button>
+              .
+            </span>
           </div>
 
           <button type="submit" disabled={!isFormValid}
@@ -106,6 +129,100 @@ export default function AffiliateSignup() {
           <p className="text-xs text-gray-400">Free to join · No approval required · 500+ campaigns available</p>
         </div>
       </div>
+
+      {showModal ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          role="presentation"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setShowModal(false);
+          }}
+        >
+          <div
+            className="relative w-full max-w-[540px] overflow-y-auto rounded-2xl bg-white p-7 shadow-xl"
+            style={{ maxHeight: "70vh", boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.12)" }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="terms-modal-title"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <h2 id="terms-modal-title" className="text-xl font-bold text-[#1E1B4B]">
+                Terms & Conditions
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="-mr-1 -mt-1 shrink-0 rounded-lg p-1 text-[#6B7280] transition-colors hover:bg-gray-100 hover:text-[#374151]"
+                aria-label="Close"
+              >
+                <X size={22} strokeWidth={2} />
+              </button>
+            </div>
+
+            <div className="space-y-5 text-[14px] leading-[1.7] text-[#374151]">
+              <section>
+                <h3 className="mb-2 font-bold text-[#1E1B4B]">1. Acceptance of Terms</h3>
+                <p>
+                  By creating an affiliate account on ShopSlayer, you agree to these Terms & Conditions and our
+                  platform policies. If you do not agree, you may not use the service.
+                </p>
+              </section>
+              <section>
+                <h3 className="mb-2 font-bold text-[#1E1B4B]">2. Affiliate Responsibilities</h3>
+                <p>
+                  You are responsible for accurate profile information, compliance with TikTok and applicable laws,
+                  and honest promotion of brand campaigns you join. Misleading claims or unauthorized use of brand
+                  assets is prohibited.
+                </p>
+              </section>
+              <section>
+                <h3 className="mb-2 font-bold text-[#1E1B4B]">3. Commission & Payments</h3>
+                <p>
+                  Commissions and payment schedules are defined per campaign and brand agreement. ShopSlayer may
+                  facilitate tracking; final payout terms are between you and the brand unless otherwise stated in
+                  writing.
+                </p>
+              </section>
+              <section>
+                <h3 className="mb-2 font-bold text-[#1E1B4B]">4. Content Guidelines</h3>
+                <p>
+                  Content must follow TikTok Shop rules, FTC disclosure requirements for sponsored content, and each
+                  campaign brief. Prohibited content includes harassment, illegal activity, and misrepresentation.
+                </p>
+              </section>
+              <section>
+                <h3 className="mb-2 font-bold text-[#1E1B4B]">5. Termination</h3>
+                <p>
+                  We may suspend or terminate accounts that violate these terms. You may stop using ShopSlayer at any
+                  time; certain obligations may survive termination as described in campaign-specific agreements.
+                </p>
+              </section>
+            </div>
+
+            <div className="mt-8 flex flex-wrap justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="rounded-lg border border-[#E5E7EB] px-5 py-2.5 text-[#6B7280] transition-colors hover:bg-gray-50"
+              >
+                Decline
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setAgreed(true);
+                  setShowModal(false);
+                }}
+                className="rounded-lg bg-[#1E1B4B] px-5 py-2.5 font-semibold text-white transition-colors hover:bg-[#2D2A7A]"
+              >
+                I Agree
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

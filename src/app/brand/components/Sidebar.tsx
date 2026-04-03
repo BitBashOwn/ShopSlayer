@@ -17,7 +17,7 @@ export default function Sidebar() {
 
   const navItems = [
     { label: "Dashboard", href: "/brand/dashboard", icon: LayoutGrid },
-    { label: "Campaigns", href: "/brand/dashboard", icon: Megaphone },
+    { label: "Campaigns", href: "/brand/campaigns", icon: Megaphone },
     { label: "Participation", href: "/brand/campaigns/glowlab-serum/participation", icon: Users },
     { label: "Reporting", href: "/brand/reporting", icon: BarChart2 },
     { label: "Brand Profile", href: "/brand/profile", icon: Building2 },
