@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function MyCampaignsCard() {
   return (
     <div className="mt-4 rounded-xl bg-white p-4 shadow-sm lg:mt-0 lg:rounded-[28px] lg:border lg:border-[#eef1f6] lg:p-6 lg:shadow-none">
@@ -27,9 +29,12 @@ export default function MyCampaignsCard() {
         </div>
       </div>
 
-      <button className="mt-4 w-full cursor-pointer rounded-lg bg-[#FF4D8D] py-3 text-sm font-medium text-white lg:mt-6 lg:rounded-full">
-        View My Campaigns -&gt;
-      </button>
+      <Link
+        href="/affiliate/Mobile_page/mobile/my-campaigns"
+        className="mt-4 block w-full rounded-lg bg-[#FF4D8D] py-3 text-center text-sm font-medium text-white lg:mt-6 lg:rounded-full"
+      >
+        View My Campaigns
+      </Link>
     </div>
   );
 }

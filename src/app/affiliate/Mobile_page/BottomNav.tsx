@@ -1,47 +1,31 @@
 "use client";
 
-import {
-  Home,
-  FileText,
-  Folder,
-  Upload,
-  User,
-} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { affiliateNavItems } from "./affiliateNavItems";
 
 export default function BottomNav() {
+  const pathname = usePathname();
+
   return (
-    <div className="fixed bottom-0 left-0 w-full border-t bg-white py-2 text-xs lg:hidden">
+    <div className="fixed bottom-0 left-0 z-40 w-full border-t bg-white py-2 text-xs lg:hidden">
       <div className="flex justify-around">
-      
-      {/* Home */}
-        <div className="flex cursor-pointer flex-col items-center text-pink-500">
-          <Home className="h-5 w-5" />
-          <span>Home</span>
-        </div>
+        {affiliateNavItems.map(({ label, href, icon: Icon, paths }) => {
+          const active = paths.includes(pathname);
 
-      {/* Campaigns */}
-        <div className="flex cursor-pointer flex-col items-center text-gray-500">
-          <FileText className="h-5 w-5" />
-          <span>Campaigns</span>
-        </div>
-
-      {/* My Campaigns */}
-        <div className="flex cursor-pointer flex-col items-center text-gray-500">
-          <Folder className="h-5 w-5" />
-          <span>My Campaigns</span>
-        </div>
-
-      {/* Submissions */}
-        <div className="flex cursor-pointer flex-col items-center text-gray-500">
-          <Upload className="h-5 w-5" />
-          <span>Submissions</span>
-        </div>
-
-      {/* Profile */}
-        <div className="flex cursor-pointer flex-col items-center text-gray-500">
-          <User className="h-5 w-5" />
-          <span>Profile</span>
-        </div>
+          return (
+            <Link
+              key={label}
+              href={href}
+              className={`flex flex-col items-center ${
+                active ? "text-pink-500" : "text-gray-500"
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+              <span>{label}</span>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

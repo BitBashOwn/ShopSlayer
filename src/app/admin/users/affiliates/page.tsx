@@ -1,13 +1,10 @@
 import AdminShell from "../../components/AdminShell";
+import UserManagementMain from "../user-management-main";
 
 export default function AdminUsersAffiliatesPage() {
   return (
     <AdminShell>
-      <main className="flex min-h-screen items-center justify-center px-8">
-        <p className="text-[15px] font-medium text-gray-500">
-          Users — Affiliates (coming soon)
-        </p>
-      </main>
+      <UserManagementMain activeTab="affiliates" />
     </AdminShell>
   );
 }
