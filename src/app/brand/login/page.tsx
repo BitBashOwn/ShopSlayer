@@ -38,7 +38,7 @@ export default function BrandLogin() {
       </div>
 
       {/* Right – White */}
-      <div className="md:w-[55%] flex flex-col justify-center p-8 lg:p-16 relative">
+      <div className="relative flex flex-col justify-center py-8 pr-8 pl-6 md:w-[55%] md:py-12 md:pr-12 md:pl-8 lg:py-16 lg:pr-16 lg:pl-10">
         <div className="hidden md:block absolute top-10 right-10 text-sm text-gray-500 font-medium">
           Don&apos;t have an account?{" "}
           <Link href="/brand/signup" className="text-[#e8445a] hover:opacity-80">Sign Up</Link>
@@ -48,7 +48,7 @@ export default function BrandLogin() {
           <Link href="/brand/signup" className="text-[#e8445a]">Sign Up</Link>
         </div>
 
-        <div className="max-w-md w-full mx-auto">
+        <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold text-[#1a1a6e] mb-2">Log in to your brand account</h2>
           <p className="text-gray-500 mb-8">Manage campaigns and track affiliate performance.</p>
 
