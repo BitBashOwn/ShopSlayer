@@ -81,8 +81,9 @@ function ProfileEditModal({
 
     const reader = new FileReader();
     reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setProfileDraft((current) => ({ ...current, avatarUrl: reader.result }));
+      const imageDataUrl = reader.result;
+      if (typeof imageDataUrl === "string") {
+        setProfileDraft((current) => ({ ...current, avatarUrl: imageDataUrl }));
         setImageError("");
       }
     };
