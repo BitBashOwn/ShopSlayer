@@ -1,39 +1,99 @@
+"use client";
+
 import MobileHeader from "../MobileHeader";
 import MyCampaignsCard from "../MyCampaignsCard";
 import ExploreTabs from "../ExploreTabs";
 import MobileCampaignCard from "../MobileCampaignCard";
 import BottomNav from "../BottomNav";
+import DesktopSidebarNav from "../DesktopSidebarNav";
+import { useMemo, useState } from "react";
+
+const campaigns = [
+  {
+    brand: "GlowLab",
+    subtitle: "Beauty brand collaboration",
+    title: "GlowLab Serum",
+    earning: "$ Earn 14% via TikTok Shop",
+    category: "Beauty",
+    plan: "Open Plan",
+    type: "Beauty",
+    colorClass: "bg-pink-400",
+  },
+  {
+    brand: "Bloom Beauty",
+    subtitle: "Lifestyle beauty drop",
+    title: "Bloom Lip Butter",
+    earning: "$ Earn 9% via TikTok Shop",
+    category: "Beauty",
+    plan: "Open Plan",
+    type: "Beauty",
+    colorClass: "bg-rose-300",
+  },
+  {
+    brand: "NovaTech",
+    subtitle: "Tech gadget promotion",
+    title: "NovaBuds Pro",
+    earning: "$ Earn 16% via TikTok Shop",
+    category: "Tech",
+    plan: "Open Plan",
+    type: "Tech",
+    colorClass: "bg-indigo-500",
+  },
+  {
+    brand: "LumenDesk",
+    subtitle: "Desk creator gear",
+    title: "LumenDesk Ring Light",
+    earning: "$ Earn 10% via TikTok Shop",
+    category: "Tech",
+    plan: "Open Plan",
+    type: "Tech",
+    colorClass: "bg-amber-400",
+  },
+  {
+    brand: "DailyAura",
+    subtitle: "Wellness lifestyle brief",
+    title: "DailyAura Morning Kit",
+    earning: "$ Earn 12% via TikTok Shop",
+    category: "Lifestyle",
+    plan: "Open Plan",
+    type: "Lifestyle",
+    colorClass: "bg-emerald-400",
+  },
+  {
+    brand: "CasaLoop",
+    subtitle: "Home lifestyle activation",
+    title: "CasaLoop Decor Bundle",
+    earning: "$ Earn 8% via TikTok Shop",
+    category: "Lifestyle",
+    plan: "Open Plan",
+    type: "Lifestyle",
+    colorClass: "bg-cyan-400",
+  },
+];
 
 export default function MobileMain() {
+  const [activeTab, setActiveTab] = useState("All");
+
+  const filteredCampaigns = useMemo(() => {
+    if (activeTab === "All") {
+      return campaigns;
+    }
+
+    return campaigns.filter((campaign) => campaign.type === activeTab);
+  }, [activeTab]);
+
   return (
     <div className="min-h-screen bg-[#F5F6FA] pb-20 lg:pb-0">
-      <div className="mx-auto max-w-[1280px] lg:grid lg:min-h-screen lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-8 lg:px-6 lg:py-8">
-        <aside className="hidden lg:flex lg:flex-col lg:rounded-[28px] lg:bg-[#24145f] lg:px-6 lg:py-7 lg:text-white lg:shadow-[0_24px_80px_rgba(36,20,95,0.22)]">
-          <div>
-            <p className="text-xl font-semibold tracking-tight">ShopSlayer</p>
-            <p className="mt-1 text-sm text-white/65">Affiliate Mobile View</p>
-          </div>
-
-          <div className="mt-10 rounded-3xl bg-white/10 p-5">
+      <div className="mx-auto max-w-[1280px] lg:grid lg:min-h-screen lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8 lg:px-6 lg:py-8">
+        <DesktopSidebarNav
+          sectionLabel="Affiliate"
+        >
+          <div className="rounded-3xl bg-white/10 p-5">
             <p className="text-sm text-white/70">Campaign Snapshot</p>
             <p className="mt-3 text-4xl font-semibold">23</p>
             <p className="mt-2 text-sm text-white/75">Available campaigns today</p>
           </div>
-
-          <div className="mt-6 space-y-3 text-sm text-white/85">
-            <div className="rounded-2xl bg-white/10 px-4 py-3">Fast browse</div>
-            <div className="rounded-2xl bg-white/5 px-4 py-3">Quick submissions</div>
-            <div className="rounded-2xl bg-white/5 px-4 py-3">Rewards overview</div>
-          </div>
-
-          <div className="mt-auto rounded-3xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs uppercase tracking-[0.18em] text-white/45">Preview</p>
-            <p className="mt-3 text-lg font-semibold">Desktop-only shell</p>
-            <p className="mt-2 text-sm leading-6 text-white/70">
-              The phone layout still stays the same on mobile screens.
-            </p>
-          </div>
-        </aside>
+        </DesktopSidebarNav>
 
         <main className="lg:overflow-hidden lg:rounded-[32px] lg:border lg:border-white/70 lg:bg-white lg:shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
           <div className="lg:flex lg:h-full lg:flex-col">
@@ -42,13 +102,21 @@ export default function MobileMain() {
             <div className="px-4 lg:flex-1 lg:overflow-y-auto lg:px-8 lg:pb-8">
               <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
                 <section>
-                  <ExploreTabs />
+                  <ExploreTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
                   <div className="mt-4 space-y-4 lg:mt-6 lg:grid lg:grid-cols-2 lg:gap-5 lg:space-y-0">
-                    <MobileCampaignCard />
-                    <MobileCampaignCard />
-                    <MobileCampaignCard />
-                    <MobileCampaignCard />
+                    {filteredCampaigns.map((campaign) => (
+                      <MobileCampaignCard
+                        key={campaign.title}
+                        brand={campaign.brand}
+                        subtitle={campaign.subtitle}
+                        title={campaign.title}
+                        earning={campaign.earning}
+                        category={campaign.category}
+                        plan={campaign.plan}
+                        colorClass={campaign.colorClass}
+                      />
+                    ))}
                   </div>
                 </section>
 

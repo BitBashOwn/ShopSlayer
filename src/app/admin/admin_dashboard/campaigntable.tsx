@@ -100,7 +100,7 @@ export default function CampaignTable() {
   return (
     <div className="mt-6 overflow-hidden rounded-xl border border-[#dfe3ee] bg-white shadow-[0_1px_2px_rgba(17,24,39,0.03)]">
       <table className="w-full min-w-[980px] text-left">
-        <thead className="bg-[#fafbfe] text-[11px] font-semibold text-[#5d6785]">
+        <thead className="bg-[#fafbfe] text-[13px] font-semibold text-[#5d6785]">
           <tr className="border-b border-[#e9edf5]">
             <th className="px-4 py-4">Campaign Name</th>
             <th className="px-4 py-4">Brand</th>
@@ -112,14 +112,14 @@ export default function CampaignTable() {
             <th className="px-4 py-4">Actions</th>
           </tr>
         </thead>
-        <tbody className="text-[12px] text-[#5d6785]">
+        <tbody className="text-[14px] text-[#5d6785]">
           {campaigns.map((campaign) => (
             <tr key={campaign.name} className="border-b border-[#eef1f7] last:border-b-0">
               <td className="px-4 py-4 font-medium text-[#1e1b68]">{campaign.name}</td>
               <td className="px-4 py-4">{campaign.brand}</td>
               <td className="px-4 py-4">{campaign.category}</td>
               <td className="px-4 py-4">
-                <span className={`rounded-full px-2.5 py-1 text-[10px] font-medium ${statusStyles[campaign.status]}`}>
+                <span className={`rounded-full px-3 py-1 text-[11px] font-medium ${statusStyles[campaign.status]}`}>
                   {campaign.status}
                 </span>
               </td>
@@ -127,7 +127,7 @@ export default function CampaignTable() {
               <td className="px-4 py-4 text-[#2f3552]">{campaign.submitted}</td>
               <td className="px-4 py-4">{campaign.dateRange}</td>
               <td className="px-4 py-4">
-                <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium">
+                <div className="flex flex-wrap items-center gap-3 text-[13px] font-medium">
                   {campaign.actions.map((action) => (
                     <span key={action} className={`cursor-pointer hover:underline ${actionStyles[action]}`}>
                       {action}

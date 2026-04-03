@@ -36,10 +36,10 @@ export default function BrandSignupClient() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white md:flex-row">
-      <div className="flex min-h-[40vh] flex-col justify-between bg-[#1a1a6e] p-8 text-white md:min-h-screen md:w-[45%] lg:p-16">
+      <div className="flex min-h-[40vh] flex-col justify-start gap-8 bg-[#1a1a6e] p-8 text-white md:min-h-screen md:w-[45%] md:gap-10 lg:p-16">
         <div>
-          <h1 className="mb-16 text-2xl font-bold">ShopSlayer</h1>
-          <div className="mb-12 max-w-md">
+          <h1 className="mb-10 text-2xl font-bold md:mb-12">ShopSlayer</h1>
+          <div className="max-w-md">
             <h2 className="mb-8 text-4xl font-bold leading-tight lg:text-5xl">
               Reach thousands of TikTok creators
             </h2>
@@ -69,7 +69,7 @@ export default function BrandSignupClient() {
         </div>
       </div>
 
-      <div className="relative flex flex-col justify-center overflow-y-auto p-8 md:w-[55%] lg:p-16">
+      <div className="relative flex flex-col justify-center overflow-y-auto py-8 pr-8 pl-6 md:w-[55%] md:py-12 md:pr-12 md:pl-8 lg:py-16 lg:pr-16 lg:pl-10">
         <div className="absolute top-10 right-10 hidden text-sm text-gray-500 md:block">
           Already have an account?{" "}
           <Link href="/brand/login" className="text-[#e8445a] hover:opacity-80">
@@ -83,7 +83,7 @@ export default function BrandSignupClient() {
           </Link>
         </div>
 
-        <div className="mx-auto w-full max-w-md py-8">
+        <div className="w-full max-w-md py-8">
           <h2 className="mb-2 text-3xl font-bold text-[#1a1a6e]">Create your brand account</h2>
           <p className="mb-8 text-gray-500">Start posting campaigns and connecting with TikTok affiliates.</p>
 
